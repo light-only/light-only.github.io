@@ -4,6 +4,8 @@
     <title>Hello World</title>
     <url>/2021/10/15/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<span id="more"></span>
+
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
@@ -17,6 +19,9 @@
 
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
   </entry>
   <entry>
     <title>前端vue.js框架学习心得</title>
@@ -26,12 +31,13 @@
 </ul>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">computed：&#123;</span><br><span class="line">	<span class="attr">fullName</span>:&#123;</span><br><span class="line">		<span class="attr">set</span>:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			#set 一般都不使用，省略</span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="attr">get</span>:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			#而get我们一般都省略</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<span id="more"></span>
+
 <p>省略之后变成这种方式，所以fullName 是计算属性。</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">computed:&#123;</span><br><span class="line">	<span class="attr">fullName</span>:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li><p><strong>计算属性computed，比methods方法要好，因为computed方法有缓存，多次使用只会调用一次，而methods每一次使用都会重新调用。</strong></p>
-<span id="more"></span></li>
+<li><strong>计算属性computed，比methods方法要好，因为computed方法有缓存，多次使用只会调用一次，而methods每一次使用都会重新调用。</strong></li>
 </ul>
 <h4 id="2-Watch属性"><a href="#2-Watch属性" class="headerlink" title="2.Watch属性"></a>2.Watch属性</h4><ul>
 <li>通过Watch 可以动态带检测到data里面的属性变化，当属性变化时就会调用watch属性里面的方法。但是方法的名字要与被检测的data变量一致。</li>
@@ -539,12 +545,18 @@
 </li>
 <li><p>写入代码</p>
 </li>
-<li><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;debounce <span class="keyword">from</span> <span class="string">&#x27;./utils.js&#x27;</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> itemListenerMixin = &#123;</span><br><span class="line">	<span class="function"><span class="title">mouted</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="keyword">let</span> refresh = 	debounce(<span class="built_in">this</span>.$refs.scroll.refresh,<span class="number">500</span>)</span><br><span class="line">		<span class="comment">//itemImgListener 是声明在home 和detail组件下的变量</span></span><br><span class="line">		<span class="built_in">this</span>.itemImgListener = <span class="function">()=&gt;</span>&#123;refresh()&#125;</span><br><span class="line">		<span class="built_in">this</span>.$bus.$on(<span class="string">&#x27;itemImgLoad&#x27;</span>,<span class="built_in">this</span>.itemImgListener)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li><p>在home和detail组件中导入</p>
-</li>
+<li><p>```javascript<br>import {debounce from ‘./utils.js’}</p>
+<p>export const itemListenerMixin = {</p>
+<pre><code>mouted()&#123;
+    let refresh =     debounce(this.$refs.scroll.refresh,500)
+    //itemImgListener 是声明在home 和detail组件下的变量
+    this.itemImgListener = ()=&gt;&#123;refresh()&#125;
+    this.$bus.$on(&#39;itemImgLoad&#39;,this.itemImgListener)
+&#125;
+</code></pre>
+<p>}</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">4. 在home和detail组件中导入</span><br><span class="line"></span><br><span class="line">```javascript</span><br><span class="line">import &#123;itemListenerMixin&#125; from &#x27;../../common/mixin.js&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
 </ol>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;itemListenerMixin&#125; <span class="keyword">from</span> <span class="string">&#x27;../../common/mixin.js&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
 <p>​    5.在home和detail组件的option中加入mixins:[]</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">	<span class="attr">name</span>:<span class="string">&#x27;Home&#x27;</span>,</span><br><span class="line">	<span class="attr">mixins</span>:[ itemListenerMixin ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -606,16 +618,23 @@
     <content><![CDATA[<h2 id="熟练掌握Git使用"><a href="#熟练掌握Git使用" class="headerlink" title="熟练掌握Git使用"></a>熟练掌握Git使用</h2><ol>
 <li><p>基本的Linux命令学习</p>
 <ul>
-<li><p>cd :改变目录</p>
+<li>cd :改变目录</li>
+</ul>
 </li>
+</ol>
+<ul>
 <li><p>cd.. 回退到上一个目录，直接cd进入默认目录</p>
-</li>
-<li><p>pwd:显示当前所在的目录路径</p>
+<ul>
+<li>pwd:显示当前所在的目录路径</li>
+</ul>
 </li>
 <li><p>ls(||):都是列出当前目录中的所有文件，只不过||列出的内容更为详细</p>
-</li>
-<li><p>touch:新建一个文件，如touch index.js 就会在当前目录下新建一个index.js文件</p>
-</li>
+<ul>
+<li>touch:新建一个文件，如touch index.js 就会在当前目录下新建一个index.js文件</li>
+</ul>
+ <span id="more"></span>
+
+<ul>
 <li><p>rm:删除一个文件 rm index.js 就会把当前文件夹下的index.js文件删除</p>
 </li>
 <li><p>mkdir:新建一个目录，就是新建一个文件夹</p>
@@ -642,9 +661,7 @@
 </li>
 </ul>
 </li>
-</ol>
-<span id="more"></span>
-
+</ul>
 <h3 id="Git配置"><a href="#Git配置" class="headerlink" title="Git配置"></a>Git配置</h3><p>查看配置：git config -l</p>
 <blockquote>
 <p><strong>划重点</strong></p>
