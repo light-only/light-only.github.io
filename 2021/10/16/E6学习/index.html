@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="ES6语法：1.展开运算符（…）1.1 数组展开1234567let arr &#x3D; [1,2,3,4]let arr2 &#x3D; [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;];#想要在arr2的b后面插入arr，使用ES6的方法 let arr3 &#x3D; [&quot;a&quot;,&quot;b&quot;,...arr,&quot;c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="E6学习">
+<meta property="og:url" content="http://example.com/2021/10/16/E6%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Light&#39;s Blog">
+<meta property="og:description" content="ES6语法：1.展开运算符（…）1.1 数组展开1234567let arr &#x3D; [1,2,3,4]let arr2 &#x3D; [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;];#想要在arr2的b后面插入arr，使用ES6的方法 let arr3 &#x3D; [&quot;a&quot;,&quot;b&quot;,...arr,&quot;c">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-16T03:44:10.000Z">
+<meta property="article:modified_time" content="2021-10-16T03:45:47.779Z">
+<meta property="article:author" content="Light">
+<meta property="article:tag" content="ES6">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2021/10/16/E6%E5%AD%A6%E4%B9%A0/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>E6学习 | Light's Blog</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?de261ac793276e7924e29a1f4f126f39";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Light's Blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ES6%E8%AF%AD%E6%B3%95%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">ES6语法：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%B1%95%E5%BC%80%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%88%E2%80%A6%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">1.展开运算符（…）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-%E6%95%B0%E7%BB%84%E5%B1%95%E5%BC%80"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 数组展开</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-%E5%AF%B9%E8%B1%A1%E5%B1%95%E5%BC%80"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 对象展开</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC"><span class="nav-number">1.2.</span> <span class="nav-text">2.解构赋值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">1.3.</span> <span class="nav-text">3.构造函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-Set-arr"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1    Set(arr)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-Map"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 Map()</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%89%A9%E5%B1%95"><span class="nav-number">1.4.</span> <span class="nav-text">4.函数对象的扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-1%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1箭头函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-2-%E6%95%B0%E7%BB%84%E6%96%B0%E5%A2%9E%E6%96%B9%E6%B3%95"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 数组新增方法</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#4-21-Array-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E4%B8%8B%E7%9A%843%E4%B8%AA%E6%96%B9%E6%B3%95"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">4.21.Array 构造函数下的3个方法</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-22-array-%E6%95%B0%E7%BB%84%E4%B8%8B%E7%9A%843%E4%B8%AA%E6%96%B9%E6%B3%95"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">4.22.array 数组下的3个方法</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-3-%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%96%B9%E6%B3%95"><span class="nav-number">1.4.3.</span> <span class="nav-text">4.3 字符串方法</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#4-31-%E6%A8%A1%E6%9D%BF%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">1.4.3.1.</span> <span class="nav-text">4.31.模板字符串</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-4-%E5%AF%B9%E8%B1%A1%E6%96%B9%E6%B3%95"><span class="nav-number">1.4.4.</span> <span class="nav-text">4.4 对象方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-5-babel-%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.4.5.</span> <span class="nav-text">4.5 babel 的使用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link"><span class="nav-number">1.4.6.</span> <span class="nav-text"></span></a></li></ol></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Light"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Light</p>
+  <div class="site-description" itemprop="description">做自己喜欢的事情</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/light-only" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;light-only" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1480418586@qq.com" title="E-Mail → mailto:1480418586@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://macshuo.com/" title="http:&#x2F;&#x2F;macshuo.com&#x2F;" rel="noopener" target="_blank">Title</a>
+        </li>
+    </ul>
+  </div>
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/16/E6%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Light">
+      <meta itemprop="description" content="做自己喜欢的事情">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Light's Blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          E6学习
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-10-16 11:44:10 / 修改时间：11:45:47" itemprop="dateCreated datePublished" datetime="2021-10-16T11:44:10+08:00">2021-10-16</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/10/16/E6%E5%AD%A6%E4%B9%A0/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/10/16/E6%E5%AD%A6%E4%B9%A0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="ES6语法："><a href="#ES6语法：" class="headerlink" title="ES6语法："></a>ES6语法：</h3><h4 id="1-展开运算符（…）"><a href="#1-展开运算符（…）" class="headerlink" title="1.展开运算符（…）"></a>1.展开运算符（…）</h4><h5 id="1-1-数组展开"><a href="#1-1-数组展开" class="headerlink" title="1.1 数组展开"></a>1.1 数组展开</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br><span class="line"><span class="keyword">let</span> arr2 = [<span class="string">&quot;a&quot;</span>,<span class="string">&quot;b&quot;</span>,<span class="string">&quot;c&quot;</span>,<span class="string">&quot;d&quot;</span>];</span><br><span class="line">#想要在arr2的b后面插入arr，使用ES6的方法</span><br><span class="line"> <span class="keyword">let</span> arr3 = [<span class="string">&quot;a&quot;</span>,<span class="string">&quot;b&quot;</span>,...arr,<span class="string">&quot;c&quot;</span>,<span class="string">&quot;d&quot;</span>]</span><br><span class="line"> #其中...就是展开运算符</span><br><span class="line"> <span class="built_in">console</span>.log(arr3)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<ul>
+<li><p>剩余对象：跟解构赋值搭配使用，取出剩余参数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line"># 剩余参数</span><br><span class="line"><span class="keyword">let</span> [a,b,...c] = arr;</span><br><span class="line">#...c相当于取出剩余部分</span><br><span class="line"><span class="built_in">console</span>.log(a,b,c) <span class="comment">// 1,2，[3,4]</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="1-2-对象展开"><a href="#1-2-对象展开" class="headerlink" title="1.2 对象展开"></a>1.2 对象展开</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line"><span class="attr">a</span>:<span class="number">1</span>,</span><br><span class="line"><span class="attr">b</span>:<span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> obj2 = &#123;</span><br><span class="line">...obj</span><br><span class="line"><span class="attr">c</span>:<span class="number">3</span></span><br><span class="line"><span class="attr">d</span>:<span class="number">4</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(obj2) <span class="comment">//&#123;a:1,b:2,c:3,d:4&#125;</span></span><br><span class="line">#同时对象之间进行赋值的时候会出现问题，</span><br><span class="line">#eg</span><br><span class="line"><span class="keyword">let</span> obj3 = obj</span><br><span class="line">obj3.a = <span class="number">10</span>;</span><br><span class="line"><span class="built_in">console</span>.log(obj) <span class="comment">//这时候obj中的a 值改为了10，如果我们不想obj里面的值发生变化，可以通过下面的方式</span></span><br><span class="line"><span class="keyword">let</span> obj3 = &#123;...obj&#125;;</span><br><span class="line">obj3.a = <span class="number">10</span>;</span><br><span class="line"><span class="built_in">console</span>.log(obj)<span class="comment">//不受影响</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="2-解构赋值"><a href="#2-解构赋值" class="headerlink" title="2.解构赋值"></a>2.解构赋值</h4><p>分为对象解构赋值</p>
+<p>数组解构赋值</p>
+<p>字符串解构赋值</p>
+<ul>
+<li><p>对象解构赋值</p>
+<p>let obj = {‘a’ = 1,’b’= 2}</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#在ES5中，要取到a和b的值肯定是通过 </span><br><span class="line"><span class="keyword">let</span> a = obj.a</span><br><span class="line"><span class="keyword">let</span> b = obj.b</span><br><span class="line">#但是在ES6中可以通过解构赋值的方式,其中a,b值跟对象中的值一一对应。</span><br><span class="line"><span class="keyword">let</span> &#123;a,b&#125; = obj </span><br><span class="line"><span class="built_in">console</span>.log(a,b)</span><br></pre></td></tr></table></figure></li>
+<li><p>数组解构赋值</p>
+<p>let arr = [“a”,”b”,”c”];</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ES6 解构赋值</span><br><span class="line">let [e,f] = arr;</span><br><span class="line">console.log(e,f) //e,f分别取到数组中的a和b</span><br></pre></td></tr></table></figure>
+
+<p>涉及到一道面试题</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">let</span> b = <span class="number">1</span>;</span><br><span class="line">#如何快速交换 a 和 b 的值</span><br><span class="line">#普通方式肯定就是增加一个变量来交换值</span><br><span class="line">#ES6解构赋值方式更为方便</span><br><span class="line">[a,b] = [b,a]</span><br></pre></td></tr></table></figure></li>
+<li><p>字符串解构赋值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#第一种情况就是str是字符串</span><br><span class="line"><span class="keyword">let</span> str = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line"><span class="keyword">let</span> [e,f] = str;</span><br><span class="line"><span class="built_in">console</span>.log(e,f) <span class="comment">//结果就是a和b</span></span><br><span class="line">#第二种情况就是nub 是数字型字符串</span><br><span class="line"><span class="keyword">let</span> nub = <span class="string">&#x27;123&#x27;</span>;</span><br><span class="line"><span class="keyword">let</span> [c,d] = nub</span><br><span class="line"><span class="built_in">console</span>.log(c,d)<span class="comment">//TypeError:nub is not iterable(迭代器)</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="3-构造函数"><a href="#3-构造函数" class="headerlink" title="3.构造函数"></a>3.构造函数</h4><h5 id="3-1-Set-arr"><a href="#3-1-Set-arr" class="headerlink" title="3.1    Set(arr)"></a>3.1    Set(arr)</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let arr = [2,1,2,3,1,&quot;a&quot;,4,4,5]</span><br><span class="line">let s = new Set(arr)</span><br></pre></td></tr></table></figure>
+
+<p>​    Set()函数的一些方法：</p>
+<ul>
+<li><p>set.clear() //清空所有值，返回的是一个空数组</p>
+</li>
+<li><p>set.delete(val)  //删除某一项</p>
+<p>参数：val  要删除的某一项</p>
+<p>返回值： true|false  是否删除成功，（没有这个值才会出现删除不成功）</p>
+</li>
+<li><p>set.has(val) //是否包含某一项</p>
+<p>参数： val要查找的值</p>
+<p>返回值：true|false  是否包含这个值</p>
+</li>
+<li><p>set.add(val) //添加一项</p>
+<p>参数： val要添加的对象</p>
+<p>返回值 ：set对象本身</p>
+</li>
+</ul>
+<h5 id="3-2-Map"><a href="#3-2-Map" class="headerlink" title="3.2 Map()"></a>3.2 Map()</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">let arr = [</span><br><span class="line">	[“a&quot;,1],</span><br><span class="line">	[&quot;b&quot;,2],</span><br><span class="line">	[&quot;c&quot;,3]</span><br><span class="line">];</span><br><span class="line">let m = new Map(arr);</span><br><span class="line">m.clear(); //清空所有值</span><br><span class="line">console.log(m.delete(&quot;a&quot;));//删除某一项的值</span><br><span class="line">console.log(m.get(&quot;b&quot;));//得到某一项的值</span><br><span class="line">console.log(m.set(&quot;d&quot;,5))//设置某一项的值，也可以修改值</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="4-函数对象的扩展"><a href="#4-函数对象的扩展" class="headerlink" title="4.函数对象的扩展"></a>4.函数对象的扩展</h4><h5 id="4-1箭头函数"><a href="#4-1箭头函数" class="headerlink" title="4.1箭头函数"></a>4.1箭头函数</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#箭头函数当有一个形参时，这个时候可以不带括号</span><br><span class="line">let fn = nub =&gt; nub*2</span><br><span class="line"></span><br><span class="line">#箭头函数有两个形参时，这个时候必须带括号</span><br><span class="line">let fn = (nub,nub2) =&gt; nub*nub2</span><br><span class="line"></span><br><span class="line">#当箭头函数没有形参时，这时候也需要带上括号</span><br><span class="line">let fn = () =&gt; console.log(111)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>箭头函数没有不定参，arguements</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">let fn = () =&gt; console.log(arguements) //undefined</span><br><span class="line"></span><br><span class="line">fn(1,2,3,4)  //  ----&gt;结论箭头函数没有arguments</span><br><span class="line"></span><br><span class="line">#可以通过展开运算符，来显示</span><br><span class="line">let fn = (...arg) =&gt; console.log(arg)</span><br><span class="line">fn(1,2,3,4) // 结果是：[1,2,3,4]</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p><strong>箭头函数的this指向问题</strong></p>
+<p>箭头函数本身没有this，调用箭头函数的this时，指向的是其声明时，所在的作用域的this。</p>
+</li>
+</ul>
+<h5 id="4-2-数组新增方法"><a href="#4-2-数组新增方法" class="headerlink" title="4.2 数组新增方法"></a>4.2 数组新增方法</h5><h6 id="4-21-Array-构造函数下的3个方法"><a href="#4-21-Array-构造函数下的3个方法" class="headerlink" title="4.21.Array 构造函数下的3个方法"></a>4.21.Array 构造函数下的3个方法</h6><p>​    不能用数组，会报错（<strong>arr.from</strong> –&gt;error）</p>
+<ul>
+<li><p>Array.from(类数组)：把一个类数组转换成真正的数组。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> lis = <span class="built_in">document</span>.querySelectorAll(<span class="string">&quot;#list li&quot;</span>);</span><br><span class="line"># 因为通过querySelectorAll()获取到的是类数组，即只有小标和长度length 但是不能调用数组的方法。</span><br><span class="line">lis = <span class="built_in">Array</span>.from(lis)<span class="comment">//这个时候LIS 才是真的数组，可以使用数组的方法。</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>也可以通过另外一种方式实现对类数组的转换：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#通过展开运算符的方式</span><br><span class="line">lis = [...lis];</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>Array.of(element1,element2,element3…): 将参数转成一个数组，返回值是一个新的数组。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = <span class="built_in">Array</span>.of(<span class="string">&#x27;2&#x27;</span>,<span class="string">&#x27;3&#x27;</span>,<span class="string">&#x27;4&#x27;</span>,<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(arr) <span class="comment">//[2,3,4,a]</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>Array.isArray(arr) :检测数据是否是数组</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let lis = document.querySelectorAll(&quot;#list li&quot;);</span><br><span class="line">console.log(Array.isArray(lis)) //false</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h6 id="4-22-array-数组下的3个方法"><a href="#4-22-array-数组下的3个方法" class="headerlink" title="4.22.array 数组下的3个方法"></a>4.22.array 数组下的3个方法</h6><p><strong>arr.find(callback)</strong>:查找数组中的参数，当满足条件是就返回值，退出。（找到一个就返回并退出）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let arr = [1,2,3,4];</span><br><span class="line">console.log(arr.find(item =&gt; item &gt;=3)) //3</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>**arr.findIndex():**查找数组中的参数，当满足条件时就返回值对应的索引值，并退出。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let arr = [1,2,3,4];</span><br><span class="line">console.log(arr.findIndex(item =&gt; item &gt;=3)) //2</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>**arr.flat() :**扁平化多维数组</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#当时二维数组的时候</span><br><span class="line">let arr = [</span><br><span class="line">	[&quot;小明&quot;，&quot;18&quot;],</span><br><span class="line">	[&quot;小刚&quot;,&quot;18&quot;]</span><br><span class="line">]</span><br><span class="line">console.log(arr.flat())//[&quot;小明&quot;,&quot;18&quot;,&quot;小刚&quot;,&quot;18&quot;]</span><br><span class="line"></span><br><span class="line">#当时多维数组时，而且我们无法判断里面嵌套了多少层的时候，我们可以通过以下方法实现</span><br><span class="line">let arr1 = [</span><br><span class="line">	[&quot;小明&quot;，&quot;18&quot;],</span><br><span class="line">	[&quot;小刚&quot;,&quot;18&quot;],</span><br><span class="line">	[</span><br><span class="line">		[2,[3,4]],</span><br><span class="line">		[5,6],</span><br><span class="line">	]</span><br><span class="line">]</span><br><span class="line">#传入一个参数Infinaty就可以了</span><br><span class="line">console.log(arr1.flat(Infinaty))//全部转换出来</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>arr.flatMap(): 返回新数组元素，跟上面的flat深度值为1的方式相同。但是flatMap通常在合并成一种方法的效率稍微高一点。</p>
+<p>参数值，是回调函数，可选参数是index，和被调用的array数组</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">let arr = [</span><br><span class="line">	[&quot;小明&quot;，&quot;18&quot;],</span><br><span class="line">	[&quot;小刚&quot;,&quot;18&quot;]</span><br><span class="line">]</span><br><span class="line">let newArr = arr.flatMap((item,index) =&gt;console.log(item,index));//[&quot;小明&quot;，&quot;18&quot;],0</span><br><span class="line">[&quot;小刚&quot;,&quot;18&quot;],1</span><br><span class="line">console.log(newArr) //[&quot;小明&quot;，&quot;18&quot;,&quot;小刚&quot;,&quot;18&quot;]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>当我们只想返回第一个值的时候，不想要第二个值。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> newArray = arr.flatMap(<span class="function">(<span class="params">item</span>) =&gt;</span>&#123;</span><br><span class="line">	item = item.filter(<span class="function">(<span class="params">item,index</span>) =&gt;</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> index == <span class="number">0</span>;</span><br><span class="line">	&#125;)</span><br><span class="line">	retrun item;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(newArray) <span class="comment">// [&quot;小明&quot;,&quot;小刚&quot;]</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>arr.fill():用一个固定值填充一个数组中从起始索引到终止索引的全部元素。不包括终止索引。</p>
+<p>Array arr.fill(value [,start [ ,end ]])</p>
+<p>参数：用来填充数组的值。</p>
+<p>可选参数：</p>
+<p>​    start：起始索引，默认值为0</p>
+<p>​    end ：终止索引，默认值为arr.length</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#默认只有一个参数的时候</span><br><span class="line">let arr = [0,1,2,3];</span><br><span class="line">arr.fill(&#x27;a&#x27;);</span><br><span class="line">cosole.log(arr);//[&quot;a&quot;,&quot;a&quot;,&quot;a&quot;,&quot;a&quot;]</span><br><span class="line">#</span><br><span class="line">arr.fill(&#x27;a&#x27;,1,2)</span><br><span class="line">console.log(arr);//[0,&quot;a&quot;,&quot;a&quot;,3]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>arr.include():</strong></p>
+<p>Boolean arr.includes(valueToFind[, fromIndex ]) 判断数组中是否包含一个指定的值。</p>
+<ul>
+<li>参数：valueToFind 需要查找的值。</li>
+<li>可选参数：从from处开始向后查找。(索引值)</li>
+<li>返回值：true 代表数组中包含valueToFind, false代表数组中不包含valueToFind。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let arr = [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;]</span><br><span class="line">console.log(arr.includes(&quot;d&quot;)) //true</span><br><span class="line"></span><br><span class="line">#当有两个参数时</span><br><span class="line">console.log(arr.includes(&quot;c&quot;,3))//false</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="4-3-字符串方法"><a href="#4-3-字符串方法" class="headerlink" title="4.3 字符串方法"></a>4.3 字符串方法</h5><p><strong>str.startsWidth</strong></p>
+<p>Boolean  str.startsWidth(searchString [, position])  判断当前字符串是否以另外一个给定的子字符串开头。</p>
+<ul>
+<li>参数：searchString  要搜索的子字符串。</li>
+<li>可选参数：position 在str中搜素 searchString的开始位置，默认值为0，也就是真正的字符串开头处。</li>
+<li>返回值：如果传入的子字符串在搜索的字符串的开始则返回true，否则返回false。</li>
+</ul>
+<p><strong>str.endsWidth</strong></p>
+<p>这个方法使用方法跟上面相同。</p>
+<p><strong>repeat</strong></p>
+<p>repeat 方法可以复制字符串</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let str = &quot;a&quot;;</span><br><span class="line">#参数为复制的次数</span><br><span class="line">console.log(str.repeat(3)) // &quot;aaa&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h6 id="4-31-模板字符串"><a href="#4-31-模板字符串" class="headerlink" title="4.31.模板字符串"></a>4.31.模板字符串</h6><p>基本使用：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> p = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;p&#x27;</span>);</span><br><span class="line"><span class="keyword">let</span> name = <span class="string">&quot;小明&quot;</span>;</span><br><span class="line"><span class="keyword">let</span> age = <span class="string">&quot;18&quot;</span>;</span><br><span class="line"><span class="keyword">let</span> school = <span class="string">&quot;初中&quot;</span>;</span><br><span class="line"># 这是ES5的插入变量的一种写法，这种方式比较普通，而且不方便。</span><br><span class="line">p.innerHTML = <span class="string">&quot;今年&lt;strong&gt; &#x27;+name+&#x27;&lt;/strong&gt;就要&lt;strong&gt; &#x27;+age+&#x27;&lt;/strong&gt;岁了，终于升入了&lt;strong&gt;&#x27;+school+&#x27;&lt;strong&gt;了&quot;</span>;</span><br><span class="line">#ES6的写法,首先外面要使用分号，然后变量使用插值表达式$&#123;变量&#125;</span><br><span class="line">p.innerHTML = <span class="string">`今年&lt;strong&gt; <span class="subst">$&#123;name&#125;</span>&lt;/strong&gt;就要&lt;strong&gt; <span class="subst">$&#123;age&#125;</span>&lt;/strong&gt;岁了，终于升入了&lt;strong&gt;<span class="subst">$&#123;school&#125;</span>&lt;strong&gt;了`</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="4-4-对象方法"><a href="#4-4-对象方法" class="headerlink" title="4.4 对象方法"></a>4.4 对象方法</h5><ul>
+<li><p>对象的简洁表示法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">let</span> b = <span class="number">1</span>;</span><br><span class="line">#ES5对象写法：</span><br><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">	<span class="attr">a</span>:a,</span><br><span class="line">	<span class="attr">b</span>:b,</span><br><span class="line">	<span class="attr">c</span>:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(a)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">#ES6写法：简洁表示法</span><br><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">	a,</span><br><span class="line">	b,</span><br><span class="line">	<span class="function"><span class="title">c</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(a)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>对象的属性名表达式：通过ES6可以给对象的属性名赋值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> name = <span class="string">&quot;小明&quot;</span>;</span><br><span class="line"><span class="keyword">let</span> obj =&#123;</span><br><span class="line">	<span class="function"><span class="title">c</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">&quot;a&quot;</span>)</span><br><span class="line">	&#125;,</span><br><span class="line">	[name]:<span class="number">111</span>  <span class="comment">//这种方式相当于把&quot;小明&quot;的值给了name</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>Object.assign </p>
+<p>Object Object.assign(target,…sources) 将所有的可枚举属性的值从一个或多个源对象复制到目标对象。</p>
+<ul>
+<li>参数：target 目标对象</li>
+<li>sources :源对象</li>
+<li>返回值：目标对象。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">	<span class="attr">a</span>:<span class="number">1</span>,</span><br><span class="line">	<span class="attr">b</span>:<span class="number">2</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">let</span> obj2 = &#123;</span><br><span class="line">	#...obj  这是第一种方式合并两个对象</span><br><span class="line">	<span class="attr">c</span>:<span class="number">3</span>,</span><br><span class="line">	<span class="attr">d</span>:<span class="number">4</span></span><br><span class="line">&#125;;</span><br><span class="line">#合并obj 和obj2有两种方式，第一种就是使用展开运算符的方式(可以选择插入位置，好用)</span><br><span class="line"></span><br><span class="line">#第二种方式就是使用<span class="built_in">Object</span> 方法</span><br><span class="line">obj2 = <span class="built_in">Object</span>.assign(obj2,obj);</span><br><span class="line"><span class="built_in">console</span>.log(obj2) <span class="comment">//[a:1,b:2,c:3,d:4]</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>Object.is</p>
+<p>Boolean Object.is(value,value2) 判断两个值是否是相同的值。</p>
+<ul>
+<li><p>规则：</p>
+<p>两个值都是undefined</p>
+<p>两个值都是null</p>
+<p>两个值都是true 或者都是false</p>
+<p>两个值都是由相同个数的字符按照相同的顺序组成的字符串</p>
+<p>两个值指向同一个对象</p>
+<p>两个值都是数字并且</p>
+<p>​    都是正零 +0</p>
+<p>​    都是负零 -0</p>
+<p>​    都是NaN</p>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="4-5-babel-的使用"><a href="#4-5-babel-的使用" class="headerlink" title="4.5 babel 的使用"></a>4.5 babel 的使用</h5><p>主要的作用就是为了兼容IE浏览器，需要把ES6代码转换成ES5的代码，这时候就需要使用babel来进行转化。</p>
+<p><strong>使用的方法</strong></p>
+<ol>
+<li><p>首先在引入babel.min.js文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=&quot;babel.min.js&quot;&gt; &lt;/script&gt; </span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>在script标签中加入style样式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script style=&quot;text/babel&quot;&gt; &lt;/script&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h5 id=""><a href="#" class="headerlink" title=""></a></h5>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ES6/" rel="tag"># ES6</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/16/git-%E7%9A%84%E7%86%9F%E7%BB%83%E4%BD%BF%E7%94%A8/" rel="prev" title="git 的熟练使用">
+                  <i class="fa fa-chevron-left"></i> git 的熟练使用
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/16/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/" rel="next" title="网络基础学习">
+                  网络基础学习 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+  
+  
+  
+
+
+
+      
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Light</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+-->
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-61695ab2dec29f3c" async="async"></script>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+
+
+  
+
+  
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el  : '#valine-comments',
+      path: "/2021/10/16/E6%E5%AD%A6%E4%B9%A0/",
+    }, {"enable":true,"appId":"xPNFTap5AHj3Aqg6u4ohzPEg-gzGzoHsz","appKey":"04zEJxzO4M7TrCTKJ3tKNtd9","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":false,"requiredFields":[]}
+    ));
+  }, window.Valine);
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"superSample":2,"width":300,"height":300,"position":"left","hOffset":0,"vOffset":-20},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
+</html>
