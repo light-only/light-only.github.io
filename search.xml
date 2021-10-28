@@ -986,4 +986,28 @@
         <tag>计算机基础</tag>
       </tags>
   </entry>
+  <entry>
+    <title>手写闭包</title>
+    <url>/2021/10/28/%E6%89%8B%E5%86%99%E9%97%AD%E5%8C%85/</url>
+    <content><![CDATA[<ul>
+<li><p>请看下面这段代码同时打印输出结果</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; ++i) &#123;</span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(i + <span class="string">&quot; &quot;</span>);</span><br><span class="line">  &#125;, <span class="number">100</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//输出结果为 5 5 5 5 5&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>答案 ：不能正常输出结果。</p>
+<p>原因是：js运行属于单线程，setTimeout注册的函数需要等到线程空出来才能执行，此时for循环已经结束，i值为5，又因为循环中setTimeout接收的参数通过闭包访问变量i，所以5个定时输出都是5。</p>
+<span id="more"></span>
+
+<ul>
+<li><p>解决方法：</p>
+<p>将setTimeout放在立即执行函数中，将i值作为参数传递给包裹的函数，创建新闭包。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;<span class="number">5</span>;i++)&#123;</span><br><span class="line">	(<span class="function"><span class="keyword">function</span>(<span class="params">i</span>)</span>&#123;</span><br><span class="line">		<span class="built_in">setTimeout</span>(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">			<span class="built_in">console</span>.log(i + <span class="string">&quot;&quot;</span>);</span><br><span class="line">		&#125;,<span class="number">100</span>)</span><br><span class="line">	&#125;)(i);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//输出结果为： 0 1 2 3 4</span></span><br></pre></td></tr></table></figure></li>
+<li><p>第二种方式</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> x = <span class="number">1</span>;</span><br><span class="line">  <span class="built_in">console</span>.log(++x);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">add(); <span class="comment">//执行输出2,</span></span><br><span class="line"></span><br><span class="line">add(); <span class="comment">//执行还是输出2,</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>怎样才能使每次执行有加 1 效果呢?使用闭包???</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> x = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(++x);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> num = add();</span><br><span class="line"></span><br><span class="line">num(); <span class="comment">//输出2,</span></span><br><span class="line"></span><br><span class="line">num(); <span class="comment">//输出3,</span></span><br><span class="line"></span><br><span class="line">num(); <span class="comment">//输出4,</span></span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>面试</tag>
+      </tags>
+  </entry>
 </search>
